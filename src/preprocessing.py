@@ -13,7 +13,11 @@ def preprocess_data(df):
 
     # Binary encoding
     binary_cols = [
-        "Partner", "Dependents", "PhoneService", "PaperlessBilling", "Churn"
+        "Partner",
+        "Dependents",
+        "PhoneService",
+        "PaperlessBilling",
+        "Churn"
     ]
 
     for col in binary_cols:
