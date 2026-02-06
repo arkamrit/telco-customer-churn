@@ -59,18 +59,13 @@ Download results as CSV
 streamlit run src/app.py
 
 📁 Project Structure
-telco-customer-churn/
-├── src/
-│   ├── train_model.py      # Model training
-│   ├── predict.py          # Batch prediction
-│   ├── preprocessing.py   # Feature engineering
-│   └── app.py              # Streamlit UI
-│
-├── models/                 # Saved model & artifacts
-├── data/                   # Raw data & predictions
-└── notebooks/              # EDA & experiments
+
+<img width="654" height="388" alt="Screenshot 2026-02-06 230506" src="https://github.com/user-attachments/assets/7d7843cc-b1dd-46b1-a5fa-849949ac054d" />
+
+
 
 🚀 Quick Start
+
 pip install -r requirements.txt
 streamlit run src/app.py
 
@@ -96,9 +91,13 @@ VS Code
 💡 What This Project Demonstrates
 
 ✔ End-to-end ML workflow
+
 ✔ Feature-safe inference
+
 ✔ Business-driven metric optimization
+
 ✔ Model deployment with Streamlit
+
 ✔ Clean, production-style project structure
 
 🔮 Next Improvements
