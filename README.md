@@ -1,3 +1,6 @@
+## 🔗 Project Demo
+This project is deployed and version-controlled using GitHub.
+
 # 📊 Telco Customer Churn Prediction
 
 This project focuses on predicting **customer churn** for a telecom company using machine learning.  
@@ -14,34 +17,7 @@ The goal is to identify customers who are likely to leave the service, so that p
 ---
 
 ## 📁 Project Structure
-
-telco-customer-churn/
-│
-├── data/
-│   ├── raw/                    # Original, unmodified data
-│   │   └── telco_churn.csv
-│   └── processed/              # Cleaned / processed data (future use)
-│
-├── models/                     # Saved trained models
-│   ├── logistic_churn_model.pkl
-│   ├── random_forest_churn_model.pkl
-│   └── scaler.pkl
-│
-├── notebooks/                  # Jupyter notebooks
-│   └── 01_eda.ipynb             # Exploratory Data Analysis
-│
-├── src/                        # Source code
-│   ├── __init__.py
-│   ├── data_loading.py         # Data loading utilities
-│   ├── preprocessing.py        # Data cleaning & feature engineering
-│   └── train_model.py          # Model training & evaluation
-│
-│
-├── README.md                   # Project documentation
-├── requirements.txt            # Python dependencies
-└── .gitignore                  # Files/folders to ignore in git
-
-
+<img width="557" height="593" alt="Screenshot 2026-01-28 225042" src="https://github.com/user-attachments/assets/47c149d5-0964-4077-9a26-001090539ad9" />
 ---
 
 ## 📊 Dataset Description
@@ -58,7 +34,6 @@ telco-customer-churn/
 - **Account info**: tenure, contract type, payment method
 - **Charges**: monthly charges, total charges
 
----
 
 ## 🧠 Models Used
 
