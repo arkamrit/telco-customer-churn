@@ -1,71 +1,112 @@
-## 🔗 Project Demo
-This project is deployed and version-controlled using GitHub.
+📊 Telco Customer Churn Prediction
 
-# 📊 Telco Customer Churn Prediction
+Machine Learning | Python | scikit-learn | Streamlit
 
-This project focuses on predicting **customer churn** for a telecom company using machine learning.  
-The goal is to identify customers who are likely to leave the service, so that proactive retention strategies can be applied.
+Predicts high-risk telecom customers using a production-ready ML pipeline and an interactive Streamlit app.
 
----
+🔎 At a Glance 
 
-## 🚀 Project Objective
+Problem: Identify customers likely to churn
 
-- Predict whether a customer will **churn (leave)** or **not churn**
-- Focus on **high recall for churn customers (Class 1)**  
-  > Missing a churn customer is more costly than flagging a non-churn customer
+Solution: Supervised ML model with tuned decision threshold
 
----
+Impact: High recall for churn class → fewer missed at-risk customers
 
-## 📁 Project Structure
-<img width="557" height="593" alt="Screenshot 2026-01-28 225042" src="https://github.com/user-attachments/assets/47c149d5-0964-4077-9a26-001090539ad9" />
----
+Delivery: Train → Predict → Web App → Download results
 
-## 📊 Dataset Description
+Tech: Python, pandas, scikit-learn, Streamlit
 
-- **Dataset**: Telco Customer Churn (Kaggle)
-- **Rows**: 7,043 customers
-- **Target Variable**: `Churn`
-  - `1` → Customer will churn
-  - `0` → Customer will not churn
+🎯 Business Objective
 
-### Feature Types
-- **Demographics**: gender, senior citizen, partner, dependents
-- **Services**: phone service, internet service, streaming, tech support, etc.
-- **Account info**: tenure, contract type, payment method
-- **Charges**: monthly charges, total charges
+Predict customer churn (Yes / No)
 
+Optimize for recall on churn customers
 
-## 🧠 Models Used
+Retention teams prefer false positives over missed churners
 
-### 1️⃣ Logistic Regression
-- Feature scaling using `StandardScaler`
-- Class weight tuning: `{0: 1, 1: 2}`
-- Custom threshold: **0.4** (instead of default 0.5)
-- Optimized for **high recall on churn class**
+Enable non-technical users via a web UI
 
-### 2️⃣ Random Forest
-- Ensemble-based model
-- Class weight handling for imbalance
-- Threshold set to **0.4**
+🧠 ML Highlights
 
----
+Model: Logistic Regression (class-weighted)
 
-## 📈 Model Evaluation Metrics
+Preprocessing:
 
-- **Recall (Class 1)** → Primary metric
-- Precision
-- Accuracy
-- Confusion Matrix
+One-hot encoding (categorical variables)
 
-### Why Recall?
-In churn prediction:
-- **False Negative** = customer leaves unnoticed (high business loss)
-- **False Positive** = retention offer to loyal customer (acceptable cost)
+Feature scaling (StandardScaler)
 
----
+Decision Threshold: 0.4 (tuned for recall)
 
-## ⚙️ How to Run the Project
+Evaluation:
 
-### 1️⃣ Install dependencies
-```bash
+Confusion matrix
+
+Precision, Recall, F1-score
+
+Inference-safe pipeline (feature alignment guaranteed)
+
+🖥️ Demo (Streamlit App)
+
+Upload customer CSV
+
+Adjust churn probability threshold
+
+View churn probability + prediction
+
+Download results as CSV
+
+streamlit run src/app.py
+
+📁 Project Structure
+telco-customer-churn/
+├── src/
+│   ├── train_model.py      # Model training
+│   ├── predict.py          # Batch prediction
+│   ├── preprocessing.py   # Feature engineering
+│   └── app.py              # Streamlit UI
+│
+├── models/                 # Saved model & artifacts
+├── data/                   # Raw data & predictions
+└── notebooks/              # EDA & experiments
+
+🚀 Quick Start
 pip install -r requirements.txt
+streamlit run src/app.py
+
+
+Batch prediction:
+
+python src/predict.py --input data/raw/telco_churn.csv
+
+🛠 Tech Stack
+
+Python 3.10
+
+pandas, numpy
+
+scikit-learn
+
+joblib
+
+Streamlit
+
+VS Code
+
+💡 What This Project Demonstrates
+
+✔ End-to-end ML workflow
+✔ Feature-safe inference
+✔ Business-driven metric optimization
+✔ Model deployment with Streamlit
+✔ Clean, production-style project structure
+
+🔮 Next Improvements
+
+CI pipeline (GitHub Actions)
+
+Model monitoring
+
+FastAPI backend
+
+Cloud deployment (Streamlit Cloud / AWS)
