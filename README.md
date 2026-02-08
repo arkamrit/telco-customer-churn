@@ -65,7 +65,9 @@ telco-customer-churn/
  ├── src/
 
 │   ├── train_model.py      # Model training
+
 │   ├── predict.py          # Batch prediction
+
 │   └── app.py              # Streamlit UI
 
 │
