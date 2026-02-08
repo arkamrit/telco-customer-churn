@@ -59,17 +59,25 @@ Download results as CSV
 streamlit run src/app.py
 
 📁 Project Structure
+
 telco-customer-churn/
-├── src/
+
+ ├── src/
+
 │   ├── train_model.py      # Model training
 │   ├── predict.py          # Batch prediction
 │   └── app.py              # Streamlit UI
+
 │
 ├── models/                 # Saved model & artifacts
+
 ├── data/                   # Raw data & predictions
+
 └── notebooks/              # EDA & experiments
 
+
 🚀 Quick Start
+
 pip install -r requirements.txt
 streamlit run src/app.py
 
@@ -95,10 +103,15 @@ VS Code
 💡 What This Project Demonstrates
 
 ✔ End-to-end ML workflow
+
 ✔ Feature-safe inference
+
 ✔ Business-driven metric optimization
+
 ✔ Model deployment with Streamlit
+
 ✔ Clean, production-style project structure
+
 
 � Model Performance
 
@@ -160,15 +173,6 @@ streamlit run src/app.py
 - Top drivers visualization
 - Results download
 
-🐛 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| `FileNotFoundError: models/churn_pipeline.pkl` | Run `python src/train_model.py` first |
-| `ValueError: could not convert string to float` | TotalCharges has blanks; app auto-fills with median |
-| `StreamlitAPIException` on app start | Clear cache: `streamlit cache clear` |
-| Model predictions seem off | Check threshold slider (default=0.4); lower = more sensitive |
-| CSV upload fails | Ensure columns match training schema (check notebooks) |
 
 🔮 Next Improvements
 
@@ -186,4 +190,3 @@ streamlit run src/app.py
 - FastAPI backend for production
 - Cloud deployment (Streamlit Cloud / AWS / GCP)
 - A/B testing framework
-
