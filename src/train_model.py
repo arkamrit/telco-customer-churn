@@ -2,61 +2,68 @@ import pandas as pd
 import joblib
 
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.metrics import classification_report
 
-from preprocessing import preprocess_data
-
-# Load & preprocess
+# ---------------- LOAD DATA ----------------
 df = pd.read_csv("data/raw/telco_churn.csv")
-df = preprocess_data(df)
 
-X = df.drop("Churn", axis=1)
-y = df["Churn"]
+# Fix TotalCharges
+df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+df["TotalCharges"].fillna(df["TotalCharges"].median(), inplace=True)
 
+X = df.drop(columns=["customerID", "Churn"])
+y = df["Churn"].map({"Yes": 1, "No": 0})
+
+# ---------------- FEATURES ----------------
+num_features = ["tenure", "MonthlyCharges", "TotalCharges"]
+
+cat_features = [
+    "gender", "SeniorCitizen", "Partner", "Dependents",
+    "PhoneService", "MultipleLines", "InternetService",
+    "OnlineSecurity", "OnlineBackup", "DeviceProtection",
+    "TechSupport", "StreamingTV", "StreamingMovies",
+    "Contract", "PaperlessBilling", "PaymentMethod"
+]
+
+# ---------------- PREPROCESSOR ----------------
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", StandardScaler(), num_features),
+        ("cat", OneHotEncoder(handle_unknown="ignore"), cat_features)
+    ]
+)
+
+# ---------------- PIPELINE ----------------
+pipeline = Pipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("model", LogisticRegression(
+            max_iter=3000,
+            class_weight={0: 1, 1: 2}
+        ))
+    ]
+)
+
+# ---------------- SPLIT ----------------
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
+    X, y, test_size=0.2, stratify=y, random_state=42
 )
 
-# ===== SCALING (IMPORTANT for Logistic Regression) =====
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+# ---------------- TRAIN ----------------
+pipeline.fit(X_train, y_train)
 
-# Logistic Regression with class weight
-lr = LogisticRegression(
-    max_iter=3000,
-    class_weight={0: 1, 1: 2}
-)
-lr.fit(X_train_scaled, y_train)
+# ---------------- EVALUATE ----------------
+probs = pipeline.predict_proba(X_test)[:, 1]
+preds = (probs >= 0.4).astype(int)
 
-lr_probs = lr.predict_proba(X_test_scaled)[:, 1]
-lr_pred = (lr_probs >= 0.4).astype(int)
+print("Pipeline Logistic Regression Results")
+print(classification_report(y_test, preds))
 
-print("Logistic Regression (Threshold 0.4 + Class Weight) Results")
-print(classification_report(y_test, lr_pred))
-print("Accuracy:", accuracy_score(y_test, lr_pred))
+# ---------------- SAVE ----------------
+joblib.dump(pipeline, "models/churn_pipeline.pkl")
 
-# Random Forest (NO scaling needed)
-rf = RandomForestClassifier(
-    n_estimators=200,
-    random_state=42,
-    class_weight={0: 1, 1: 2}
-)
-rf.fit(X_train, y_train)
-
-rf_probs = rf.predict_proba(X_test)[:, 1]
-rf_pred = (rf_probs >= 0.4).astype(int)
-
-print("Random Forest (Threshold 0.4 + Class Weight) Results")
-print(classification_report(y_test, rf_pred))
-print("Accuracy:", accuracy_score(y_test, rf_pred))
-print(confusion_matrix(y_test, rf_pred))
-
-# ===== SAVE MODELS =====
-joblib.dump(lr, "models/logistic_churn_model.pkl")
-joblib.dump(rf, "models/random_forest_churn_model.pkl")
-joblib.dump(scaler, "models/scaler.pkl")
-joblib.dump(X.columns.tolist(), "models/feature_names.pkl")
+print("✅ Pipeline saved to models/churn_pipeline.pkl")
